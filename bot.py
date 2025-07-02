@@ -1,4 +1,3 @@
-
 print("bot démarré")
 
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
@@ -12,7 +11,7 @@ async def start(update, context):
 async def help_command(update, context):
     await update.message.reply_text("Voici les commandes disponibles :\n/start - pour démarrer le bot\n/help - pour recevoir de l'aide\nÉcris-moi un mot-clé comme 'vidéo' ou 'image'.")
 
-# Fonction pour gérer tous les messages
+# Fonction pour gérer les messages
 async def handle_message(update, context):
     text = update.message.text.lower()
 
@@ -30,26 +29,25 @@ async def handle_message(update, context):
             with open("video.mp4", "rb") as video_file:
                 await update.message.reply_video(video=InputFile(video_file), caption="Voici ta vidéo 📹")
         except Exception as e:
-            await update.message.reply_text(f"Sorry, les vidéos sont peut-être trop lourdes. Réessaye ou compresse-les. Erreur : {e}")
+            await update.message.reply_text(f"Sorry, la vidéo est peut-être trop lourde ou absente. Erreur : {e}")
 
     elif "image" in text or "photo" in text:
         try:
             with open("image.jpg", "rb") as img_file:
-                await update.message.reply_photo(photo=InputFile(img_file), caption="Je suis BG ein... Oui je sais 😎")
+                await update.message.reply_photo(photo=InputFile(img_file), caption="Je suis bg ein...oui je sais. 🖼️")
         except Exception as e:
             await update.message.reply_text(f"Erreur lors de l'envoi de l'image : {e}")
 
     else:
-        await update.message.reply_text(f"Tu m'as dit : {text}, mais je n'ai pas encore de réponse spéciale pour ça 😅")
+        await update.message.reply_text(f"Tu m'as dit : {text}, mais je n’ai pas encore de réponse spéciale pour ça 😅")
 
-# Création de l'application
+# Création du bot avec ton TOKEN
 app = ApplicationBuilder().token("7178620711:AAG1-qGhXxYnobLJ3ooEtGMwUFdcbag7enE").build()
 
-# Ajout des handlers
+# Ajout des commandes
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("help", help_command))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 # Lancement du bot
 app.run_polling()
-
