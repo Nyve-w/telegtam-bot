@@ -1,3 +1,5 @@
+
+print("bot demarré")
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from telegram import InputFile
 
